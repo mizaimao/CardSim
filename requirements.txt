@@ -9,5 +9,8 @@ black
 mypy
 
 # game library
-ursina  # also installs panda3d
-screeninfo  # ursina dependency
+# ursina  # also installs panda3d
+# screeninfo  # ursina dependency
+
+# vision library
+opencv-python
