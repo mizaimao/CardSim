@@ -2,8 +2,12 @@
 setuptools
 numpy
 pyyaml==5.4.1
-mypy
 tqdm
+
+# linting
+black
+mypy
+
 # game library
 ursina  # also installs panda3d
 screeninfo  # ursina dependency
