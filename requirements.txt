@@ -1,0 +1,5 @@
+setuptools
+numpy
+pyyaml==5.4.1
+mypy
+tqdm
