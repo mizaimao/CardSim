@@ -4,8 +4,8 @@ from typing import Tuple
 import numpy as np
 
 
-test_colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
-table_color: Tuple[int, int, int] = (0, 81, 44)
+test_colors = [(255, 0, 0, 255), (0, 255, 0, 255), (0, 0, 255, 255)]
+table_color: Tuple[int, int, int] = (0, 81, 44, 255)
 
 class CardTable:
 
@@ -35,7 +35,7 @@ class CardTable:
             self.color_index = 0
             
         image: np.ndarray = np.full(
-            (self.frame_height, self.frame_width, 3), test_colors[self.color_index], dtype=np.uint8
+            (self.frame_height, self.frame_width, 4), test_colors[self.color_index], dtype=np.uint8
         )
         self.color_index += 1
 
@@ -44,7 +44,7 @@ class CardTable:
     def get_image(self):
         assert self.image is not None
         if self.color_format == "BGR":
-            return np.swapaxes(self.image[-1], 0, -1)
+            return self.image[..., 2::-1]
         elif self.color_format == "RGB":
             return self.image
         else:
@@ -55,7 +55,7 @@ class CardTable:
         self.image = self.generate_frame()
         
         if self.color_format == "BGR":
-            return self.image[...,::-1]
+            return self.image[..., 2::-1]
         elif self.color_format == "RGB":
             return self.image
         else:
