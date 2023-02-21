@@ -1,30 +1,9 @@
 """Definition of card objects."""
 
-from typing import Dict, Tuple
+from typing import Dict
 
 import numpy as np
-import cv2
 
-
-# constants
-DEFAULT_WINDOW_WIDTH: int = 800
-DEFAULT_CARD_WIDTH_RATIO: float = 0.2  # ratio to widow width
-DEFAULT_CARD_RALETIVE_HEIGHT: float = 1.61  # ratio to card width
-DEFAULT_CARD_BACKGROUND_COLOR: Tuple[int, int, int, int] = (255, 255, 255, 255)
-
-DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (0, 0, 0, 255)
-DEFAULT_CARD_TEXT_FONT: int = cv2.FONT_HERSHEY_SIMPLEX
-DEFAULT_CARD_TEXT_LINE: int = cv2.LINE_AA
-DEFAULT_CARD_FONT_THICKNESS: int = 2
-DEFAULT_CARD_FONT_SCALE: int = 20
-DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET: float = 0.2  # from top
-DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET: float = 0.1  # from left
-
-card_width: int = int(DEFAULT_WINDOW_WIDTH * DEFAULT_CARD_WIDTH_RATIO)
-card_height: int = int(card_width * DEFAULT_CARD_RALETIVE_HEIGHT)
-card_text_loc: Tuple[int, int] = (
-    int(card_height * DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET), int(card_width * DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET)
-)
 
 # card mapping
 suit_mapping: Dict[int, str] = {
@@ -50,18 +29,6 @@ number_mapping: Dict[int, int] = {
     12: "K ",  # King
 }
 
-def create_card_blank(
-        card_width: int, card_height: int, background_color: Tuple[int, int, int, int]
-    ) -> np.ndarray:
-
-    return np.full(
-        (card_height, card_width, 4), background_color, dtype=np.uint8
-    )
-card_background: np.ndarray = create_card_blank(
-    card_width=card_width,
-    card_height=card_height,
-    background_color=DEFAULT_CARD_BACKGROUND_COLOR,
-)
 
 class Card:
     
