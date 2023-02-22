@@ -7,6 +7,7 @@ import numpy as np
 from cards.visual.card_table_visual import CardTableVisual
 from cards.visual.card_visual import CardVisual
 from cards.objects.card_class import Card
+from cards.objects.game import GameSession
 
 
 DEFAULT_CARD_WIDTH_RATIO: float = 0.1  # ratio to window width
@@ -22,12 +23,16 @@ class VisualManager:
         self,
         frame_width: int,
         frame_height: int,
+        game_session: GameSession,
         color_format: str = "BGR"
     ):
         # basic properties
         self.frame_width: int = frame_width
         self.frame_height: int = frame_height
         self.color_format: str = color_format
+        
+        # game session pointer
+        self.game_session: GameSession = game_session
 
         # table visual
         self.tablev: CardTableVisual = CardTableVisual(

@@ -1,21 +1,51 @@
 """Main game entry-point."""
+from typing import List
+
 import numpy as np
 import cv2
 
 from cards.visual.visual_manger import VisualManager
+from cards.objects.player import Player
+from cards.objects.dealer import Dealer
+from cards.objects.game import GameSession
 
 
 FRAME_WIDTH: int = 1280
 FRAME_HEIGHT: int = 800
 WINDOW_NAME: str = "Chicken"
+N_PLAYERS: int = 1
+SEED: int = 720
 
 
 
 def game():
     """Entry-point."""
+    # rng
+    rng: np.random.RandomState() = np.random.RandomState(SEED)
+
+    # add players
+    players: List[Player] = [
+        Player(disabled=False) for _ in range(N_PLAYERS)
+    ]
+
+    # create a card dealer
+    dealer: Dealer = Dealer(
+        sets=1, include_jokers=False, rng=rng
+    )
+
+    # create a game
+    game_session: GameSession = GameSession(
+        dealer=dealer,
+        players=players,
+        active_player=0,
+        game_name="Chicken Game",
+    )
 
     vman: VisualManager = VisualManager(
-        frame_width=FRAME_WIDTH, frame_height=FRAME_HEIGHT, color_format="BGR"
+        frame_width=FRAME_WIDTH,
+        frame_height=FRAME_HEIGHT,
+        game_session=game_session,
+        color_format="BGR",
     )
 
 
