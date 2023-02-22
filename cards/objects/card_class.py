@@ -73,20 +73,3 @@ class Card:
         if show_set_number:
             name_str += f" from Set {self.set_number}"
         return name_str
-
-    def get_card_image(self, card_width: int, card_height: int) -> np.ndarray:
-
-        assert card_background is not None
-        card_image: np.ndarray = cv2.putText(
-            card_background.copy(),
-            f"{self.suit}\n{self.number}",
-            card_text_loc,
-            DEFAULT_CARD_TEXT_FONT,
-            DEFAULT_CARD_FONT_SCALE,
-            DEFAULT_CARD_TEXT_COLOR,
-            DEFAULT_CARD_FONT_THICKNESS,
-            DEFAULT_CARD_TEXT_LINE
-        )
-
-        return card_image
-    

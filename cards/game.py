@@ -22,7 +22,7 @@ def game():
     key: int = ord('n')
     
     while key == ord('n'):
-        image: np.ndarray = vman.get_table_image()
+        image: np.ndarray = vman.get_frame()
         cv2.imshow(WINDOW_NAME, image)
 
         key = cv2.waitKey(0)

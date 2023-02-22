@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 
 # constants
-DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (100, 100, 100, 255)
+DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (255, 255, 255, 255)
 DEFAULT_CARD_TEXT_FONT: int = cv2.FONT_HERSHEY_SIMPLEX
 DEFAULT_CARD_TEXT_LINE: int = cv2.LINE_AA
 DEFAULT_CARD_FONT_THICKNESS: int = 2
