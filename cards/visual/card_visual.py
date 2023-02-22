@@ -4,6 +4,8 @@ from typing import Tuple
 import numpy as np
 import cv2
 
+from cards.objects.card_class import Card
+
 # constants
 DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (255, 255, 255, 255)
 DEFAULT_CARD_TEXT_FONT: int = cv2.FONT_HERSHEY_SIMPLEX
@@ -45,12 +47,16 @@ class CardVisual:
             (self.card_height, self.card_width, 4), self.background_color, dtype=np.uint8
         )
     
-    def get_card_blank_image(self) -> np.ndarray:
+    def get_card_blank_image(self, card: Card) -> np.ndarray:
         assert self.card_background is not None
+
+        
+
         return self.card_background
 
-    def get_card_image(self, ) -> np.ndarray:
+    def get_card_image(self, card: Card) -> np.ndarray:
         assert self.card_background is not None
+
         card_image: np.ndarray = cv2.putText(
             self.card_background.copy(),
             f"{self.suit}\n{self.number}",

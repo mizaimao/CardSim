@@ -54,16 +54,23 @@ class Card:
         self.suit: int = suit
         self.number: int = number
         self.set_number: int = set_number
-        self.card_name: str = None
+        self.card_full_name: str = None
+        self.suit_name: str = None
+        self.number_name: str = None
         self.__post_init__()
 
 
     def __post_init__(self):
-        self.card_name = self._generate_card_name()
+        self.suit_name = suit_mapping[self.suit]
+        self.number_name = number_mapping[self.number]
+        self.card_full_name = "{} {}".format(
+            self.suit_name, self.number_name
+        )
 
 
     def _generate_card_name(self) -> str:
         """Generate a string of card name for display."""
+
         return "{} {}".format(
             suit_mapping[self.suit], number_mapping[self.number]
         )

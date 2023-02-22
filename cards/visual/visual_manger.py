@@ -74,6 +74,9 @@ class VisualManager:
         #frame[100: 150, 200: 250] = (0, 0, 0, 255)
 
         # get cards
+        card_images: List[np.ndarray] = [
+            self.get_card_image(x) for x in self.game_session.players[0].hand
+        ]
         card_image: np.ndarray = self.get_card_image()
         n_cards: int = 3
         card_displayable_window_width: int = int(self.frame_width * BOTTOM_CARD_DISPLAY_RANGE_WIDTH_RATIO)

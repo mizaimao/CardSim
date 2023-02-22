@@ -44,7 +44,7 @@ def game():
     vman: VisualManager = VisualManager(
         frame_width=FRAME_WIDTH,
         frame_height=FRAME_HEIGHT,
-        game_session=game_session,
+        game_session=game_session,  # add a session pointer to vis
         color_format="BGR",
     )
 

@@ -19,4 +19,6 @@ class GameSession:
         self.active_player: int = active_player
         self.game_name: str = game_name
 
+    def deal_cards(self):
+        pass
     

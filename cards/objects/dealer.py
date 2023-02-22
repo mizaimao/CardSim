@@ -83,4 +83,4 @@ class Dealer:
 if __name__ == "__main__":
     # test module
     dealer: Dealer = Dealer()
-    print(dealer.deck[0].card_name)
+    print(dealer.deck[0].card_full_name)
