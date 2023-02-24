@@ -11,8 +11,10 @@ from cards.objects.game import GameSession
 
 
 DEFAULT_CARD_WIDTH_RATIO: float = 0.1  # ratio to window width
-DEFAULT_CARD_RALETIVE_HEIGHT: float = 1.61  # ratio to card width
+DEFAULT_CARD_RALETIVE_HEIGHT: float = 1.5  # ratio to card width
 DEFAULT_CARD_BACKGROUND_COLOR: Tuple[int, int, int, int] = (224, 167, 93, 255)
+
+CARD_ASSET_NAME: str = "card_set_0"
 
 BOTTOM_CARD_OFFSET_FROM_EDGE_RATIO: float = 0.05  # raito to window height, from bottom
 BOTTOM_CARD_DISPLAY_RANGE_WIDTH_RATIO: float = 0.6  # ratio to window width
@@ -46,7 +48,12 @@ class VisualManager:
             card_width=self.card_width,
             card_height=self.card_height,
             background_color=DEFAULT_CARD_BACKGROUND_COLOR,
+            asset_name=CARD_ASSET_NAME,
+            use_card_ratio=True,
         )
+        # if use ratio of card assets, width will be kept and height should be updated
+        self.card_height = self.cardv.get_updated_card_height()
+    
 
     def get_card_image(self, card: Card):
         card_image: np.ndarray = self.cardv.get_card_image(card)

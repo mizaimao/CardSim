@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 
 from cards.objects.card_class import Card
+from cards.assets.card_asset_loader import CardAsset
 
 # constants
 DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (255, 255, 255, 255)
@@ -22,21 +23,38 @@ class CardVisual:
             self,
             card_width: int,
             card_height: int,
-            background_color: Tuple[int, int, int, int]
+            background_color: Tuple[int, int, int, int],
+            asset_name: str = None,
+            use_card_ratio: bool = True,
         ):
+        # card settings
         self.card_width: int = card_width
         self.card_height: int = card_height
         self.background_color: Tuple[int, int, int, int] = background_color
-
+        
+        # generated card settings
         self.card_background: np.ndarray = None
         self.card_text_loc: Tuple[int, int] = None
-        
+
+        # asset settings
+        self.asset_name: str = asset_name
+        self.card_asset: CardAsset = None
+        self.use_card_ratio: bool = use_card_ratio
+
         self.__post_init__()
     
 
     def __post_init__(self):
-        self.card_background = self.create_card_blank()
+        # update card asset if requested
+        if self.asset_name is not None:
+            self.card_asset = CardAsset(self.asset_name)
+            # resize card asset to specified card size
+            self.card_height = self.card_asset.resize_card_images(
+                self.card_width, self.card_height, keep_ratio=self.use_card_ratio
+            )
 
+        # create generated card images
+        self.card_background = self.create_card_blank()
         self.card_text_loc = (
             #int(self.card_height * DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET),
             int(self.card_width * DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET),
@@ -48,14 +66,18 @@ class CardVisual:
             (self.card_height, self.card_width, 4), self.background_color, dtype=np.uint8
         )
     
+    def get_updated_card_height(self) -> int:
+        return self.card_height
+    
     def get_card_blank_image(self, card: Card) -> np.ndarray:
         assert self.card_background is not None
-
-        
-
         return self.card_background
 
-    def get_card_image(self, card: Card) -> np.ndarray:
+    def get_generated_card_image(self, card) -> np.ndarray:
+        """
+        Function to retrieve a generated card image.
+        This is used as a placeholder when no asset is used.
+        """
         assert self.card_background is not None
 
         card_image: np.ndarray = cv2.putText(
@@ -70,3 +92,10 @@ class CardVisual:
         )
 
         return card_image
+
+    def get_card_image(self, card: Card) -> np.ndarray:
+        # use asset if available
+        if self.asset_name is not None:
+            return self.card_asset.get_card_image(card_code=card.card_code)
+        else:
+            return self.get_generated_card_image(card=card)
