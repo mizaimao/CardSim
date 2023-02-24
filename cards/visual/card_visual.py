@@ -16,6 +16,8 @@ DEFAULT_CARD_FONT_SCALE: int = 0.5
 DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET: float = 0.14  # from top
 DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET: float = 0.06  # from left
 
+PRIVATE_CARD_CODE: int = -2
+
 
 class CardVisual:
 
@@ -80,22 +82,29 @@ class CardVisual:
         """
         assert self.card_background is not None
 
-        card_image: np.ndarray = cv2.putText(
-            self.card_background.copy(),
-            f"{card.suit_name} {card.number_name}",
-            self.card_text_loc,
-            DEFAULT_CARD_TEXT_FONT,
-            DEFAULT_CARD_FONT_SCALE,
-            DEFAULT_CARD_TEXT_COLOR,
-            DEFAULT_CARD_FONT_THICKNESS,
-            DEFAULT_CARD_TEXT_LINE
-        )
-
-        return card_image
+        if card.private:
+            return self.card_background.copy()
+        else:
+            return cv2.putText(
+                self.card_background.copy(),
+                f"{card.suit_name} {card.number_name}",
+                self.card_text_loc,
+                DEFAULT_CARD_TEXT_FONT,
+                DEFAULT_CARD_FONT_SCALE,
+                DEFAULT_CARD_TEXT_COLOR,
+                DEFAULT_CARD_FONT_THICKNESS,
+                DEFAULT_CARD_TEXT_LINE
+            )
+        
+    def get_asset_card_image(self, card) -> np.ndarray:
+        card_code: int = card.card_code
+        if card.private:
+            card_code = PRIVATE_CARD_CODE
+        return self.card_asset.get_card_image(card_code=card_code)
 
     def get_card_image(self, card: Card) -> np.ndarray:
         # use asset if available
         if self.asset_name is not None:
-            return self.card_asset.get_card_image(card_code=card.card_code)
+            return self.get_asset_card_image(card=card)
         else:
             return self.get_generated_card_image(card=card)

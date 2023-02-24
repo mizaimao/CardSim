@@ -45,5 +45,3 @@ class GameSession:
             self.active_player_index += 1
             if self.active_player_index == self.n_players:
                 self.active_player_index = 0
-
-    

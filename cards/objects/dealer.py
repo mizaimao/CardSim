@@ -57,7 +57,7 @@ class Dealer:
         )
         self.rng.shuffle(cards)
         self.deck.extend(
-            [Card(card_code=x) for x in cards]
+            [Card(card_code=x, private=False) for x in cards]
         )
 
     def draw_one(self):

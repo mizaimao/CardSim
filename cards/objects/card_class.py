@@ -32,7 +32,7 @@ number_mapping: Dict[int, int] = {
 
 class Card:
     
-    def __init__(self, card_code: int, set_number: int = 0):
+    def __init__(self, card_code: int, set_number: int = 0, private: bool = False):
         """
         Args
             suit: Suit of card. Using the following codes:
@@ -49,6 +49,7 @@ class Card:
         self.card_full_name: str = None
         self.suit_name: str = None
         self.number_name: str = None
+        self.private: bool = private
         self.__post_init__()
 
     def __post_init__(self):

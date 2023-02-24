@@ -55,6 +55,7 @@ class CardAsset:
         assert self.images, "Populate card images with resize_card_images() first."
         return self.images[int(card_code)]
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
+    """Test."""
     a = CardAsset()
