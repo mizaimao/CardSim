@@ -11,9 +11,9 @@ DEFAULT_CARD_TEXT_COLOR: Tuple[int, int, int, int] = (255, 255, 255, 255)
 DEFAULT_CARD_TEXT_FONT: int = cv2.FONT_HERSHEY_SIMPLEX
 DEFAULT_CARD_TEXT_LINE: int = cv2.LINE_AA
 DEFAULT_CARD_FONT_THICKNESS: int = 2
-DEFAULT_CARD_FONT_SCALE: int = 20
-DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET: float = 0.2  # from top
-DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET: float = 0.1  # from left
+DEFAULT_CARD_FONT_SCALE: int = 0.8
+DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET: float = 0.14  # from top
+DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET: float = 0.06  # from left
 
 
 class CardVisual:
@@ -38,8 +38,9 @@ class CardVisual:
         self.card_background = self.create_card_blank()
 
         self.card_text_loc = (
-            int(self.card_height * DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET),
+            #int(self.card_height * DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET),
             int(self.card_width * DEFAULT_CARD_TEXT_RELATIVE_X_OFFSET),
+            int(self.card_height * DEFAULT_CARD_TEXT_RELATIVE_Y_OFFSET),
         )
     
     def create_card_blank(self) -> np.ndarray:
@@ -59,7 +60,7 @@ class CardVisual:
 
         card_image: np.ndarray = cv2.putText(
             self.card_background.copy(),
-            f"{self.suit}\n{self.number}",
+            f"{card.suit_name} {card.number_name}",
             self.card_text_loc,
             DEFAULT_CARD_TEXT_FONT,
             DEFAULT_CARD_FONT_SCALE,

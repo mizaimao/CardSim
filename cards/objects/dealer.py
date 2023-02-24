@@ -50,27 +50,12 @@ class Dealer:
     def _fill_deck_one_set(self):
         """Fill the current deck with one set of cards."""
         cards: np.ndarray = np.arange(
-            54 if self.include_jokers else 52
+            54 if self.include_jokers else 52, dtype=np.uint8
         )
         self.rng.shuffle(cards)
         self.deck.extend(
-            [self._create_card(card_code=x) for x in cards]
+            [Card(card_code=x) for x in cards]
         )
-
-    def _create_card(self, card_code: int) -> Card:
-        """
-        Convert a card code into a card object.
-        
-        0 - 12: spades (0)
-        13 - 25: hearts (1)
-        26 - 38: diamons (2)
-        39 - 51: clubs (3)
-        52 - 53: jokers (4)
-        """
-        suit: int = int(card_code // 13)
-        number: int = int(card_code % 13)
-        card: Card = Card(suit=suit, number=number)
-        return card
 
     def draw_one(self):
         if len(self.deck) == 0:

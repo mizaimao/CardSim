@@ -49,7 +49,7 @@ class VisualManager:
         )
 
     def get_card_image(self):
-        card_image: np.ndarray = self.cardv.get_card_blank_image()
+        card_image: np.ndarray = self.cardv.get_card_image(Card(2,5))
         return card_image
         
     def get_table_image(self):

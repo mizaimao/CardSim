@@ -32,7 +32,7 @@ number_mapping: Dict[int, int] = {
 
 class Card:
     
-    def __init__(self, suit: int, number: int, set_number: int = 0):
+    def __init__(self, card_code: int, set_number: int = 0):
         """
         Args
             suit: Suit of card. Using the following codes:
@@ -42,31 +42,45 @@ class Card:
                 3. clubs
                 4: jokers, numebr 0 is black-white, and 1 is colored
         """
-        # sainty checks
-        assert isinstance(number, int)
-        if suit == 4:
-            assert number in (0, 1), f"Joker can only have number code 0 or 1, got {number}."
-        elif 0 <= suit < 4:
-            assert 0 <= number <= 12, f"Number can be range from 0 to 12, inclusively; got {number}."
-        else:
-            raise ValueError(f"Unknown suit code {suit}")
+
         
-        self.suit: int = suit
-        self.number: int = number
+        self.suit: int
+        self.number: int
+        self.card_code: int = card_code
         self.set_number: int = set_number
         self.card_full_name: str = None
         self.suit_name: str = None
         self.number_name: str = None
         self.__post_init__()
 
-
     def __post_init__(self):
+        """
+        Convert a card code into a essential card info.
+        0 - 12: spades (0)
+        13 - 25: hearts (1)
+        26 - 38: diamons (2)
+        39 - 51: clubs (3)
+        52 - 53: jokers (4)
+        """
+        suit: int = int(self.card_code // 13)
+        number: int = int(self.card_code % 13)
+
+        # sainty checks
+        if suit == 4:
+            assert number in (0, 1), f"Joker can only have number code 0 or 1, got {number}."
+        elif 0 <= suit < 4:
+            assert 0 <= number <= 12, f"Number can be range from 0 to 12, inclusively; got {number}."
+        else:
+            raise ValueError(f"Unknown suit code {suit}")
+        # update card info
+        self.suit = suit
+        self.number = number
+        # update card name
         self.suit_name = suit_mapping[self.suit]
         self.number_name = number_mapping[self.number]
         self.card_full_name = "{} {}".format(
             self.suit_name, self.number_name
         )
-
 
     def _generate_card_name(self) -> str:
         """Generate a string of card name for display."""
