@@ -39,5 +39,5 @@ class CardTableVisual:
         
     def get_image(self):
         assert self.image is not None
-        return self.image
+        return self.image.copy()
 

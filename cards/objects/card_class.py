@@ -42,8 +42,6 @@ class Card:
                 3. clubs
                 4: jokers, numebr 0 is black-white, and 1 is colored
         """
-
-        
         self.suit: int
         self.number: int
         self.card_code: int = card_code

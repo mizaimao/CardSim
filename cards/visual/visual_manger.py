@@ -48,8 +48,8 @@ class VisualManager:
             background_color=DEFAULT_CARD_BACKGROUND_COLOR,
         )
 
-    def get_card_image(self):
-        card_image: np.ndarray = self.cardv.get_card_image(Card(2,5))
+    def get_card_image(self, card: Card):
+        card_image: np.ndarray = self.cardv.get_card_image(card)
         return card_image
         
     def get_table_image(self):
@@ -77,8 +77,8 @@ class VisualManager:
         card_images: List[np.ndarray] = [
             self.get_card_image(x) for x in self.game_session.players[0].hand
         ]
-        card_image: np.ndarray = self.get_card_image()
-        n_cards: int = 3
+        #card_image: np.ndarray = self.get_card_image(Card(35))
+        n_cards: int = len(card_images)
         card_displayable_window_width: int = int(self.frame_width * BOTTOM_CARD_DISPLAY_RANGE_WIDTH_RATIO)
         # left blank before card displaying region
         x_offset: int = int((self.frame_width - card_displayable_window_width) // 2)
@@ -91,9 +91,8 @@ class VisualManager:
             card_height=self.card_height,
             n_cards=n_cards,
         )
-        x_coors = [] + x_coors
 
-        for _x_start, y_start in zip(x_coors, y_coors):
+        for _x_start, y_start, card_image in zip(x_coors, y_coors, card_images):
             x_start = _x_start + x_offset
             x_end = x_start + self.card_width
             y_end = y_start + self.card_height
@@ -116,7 +115,9 @@ class VisualManager:
             List[int]: Staring y coor (from top to down) for each card.
         """
         # sanity check
-        assert n_cards > 0
+        if not n_cards > 0:
+            return [], []
+
         y_coor: int = int(
             total_height * (1 - BOTTOM_CARD_OFFSET_FROM_EDGE_RATIO) - card_height
         )
@@ -124,14 +125,13 @@ class VisualManager:
         x_coors: List[int] = []
         y_coors: List[int] = [y_coor for _ in range(n_cards)]
 
-
         sum_card_width: int = card_width * n_cards
-        
         # put all cards on the table and they can be arranged with spaces between them
-        if sum_card_width >= total_width:
+        if sum_card_width <= total_width:
             spacer: int = int(
                 (total_width - sum_card_width) // (n_cards + 1)
             )
+
             for i in range(n_cards):
                 x_coors.append(
                     spacer + (spacer + card_width) * i  # i starts from 0

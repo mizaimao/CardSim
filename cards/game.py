@@ -30,14 +30,17 @@ def game():
 
     # create a card dealer
     dealer: Dealer = Dealer(
-        sets=1, include_jokers=False, rng=rng
+        sets=1,
+        include_jokers=False,
+        players=players,
+        rng=rng,
     )
 
     # create a game
     game_session: GameSession = GameSession(
         dealer=dealer,
         players=players,
-        active_player=0,
+        active_player_index=0,
         game_name="Chicken Game",
     )
 
@@ -52,7 +55,11 @@ def game():
     key: int = ord('n')
     
     while key == ord('n'):
+
+        game_session.deal_cards_discard_hand(3)
         image: np.ndarray = vman.get_frame()
+
+
         cv2.imshow(WINDOW_NAME, image)
 
         key = cv2.waitKey(0)
